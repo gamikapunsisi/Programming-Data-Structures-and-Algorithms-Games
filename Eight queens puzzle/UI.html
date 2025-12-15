@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eight Queens Puzzle Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading">
+        <div class="loading-spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-notification" id="notification">
+        <span class="toast-message"></span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-wrapper">
+        <div class="game-card">
+            
+            <!-- Header -->
+            <header class="game-header">
+                <h1 class="game-title">Eight Queens Puzzle</h1>
+                <p class="game-subtitle">Place 8 queens without any conflicts</p>
+            </header>
+
+            <!-- Statistics Bar -->
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <span class="stat-number" id="queensPlaced">0</span>
+                    <span class="stat-label">Queens Placed</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="solutionsFound">0</span>
+                    <span class="stat-label">Solutions Found</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">92</span>
+                    <span class="stat-label">Total Solutions</span>
+                </div>
+            </div>
+
+            <!-- User Input -->
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="username" 
+                    class="username-input" 
+                    placeholder="Enter your username"
+                    maxlength="50"
+                />
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="resetButton">
+                    <span class="btn-icon">🔄</span>
+                    <span>Reset</span>
+                </button>
+                <button class="btn btn-success" id="computeButton">
+                    <span class="btn-icon">⚡</span>
+                    <span>Compute</span>
+                </button>
+                <button class="btn btn-info" id="compareButton">
+                    <span class="btn-icon">📊</span>
+                    <span>Compare</span>
+                </button>
+                <button class="btn btn-warning" id="run15RoundsButton">
+                    <span class="btn-icon">🎯</span>
+                    <span>15 Rounds</span>
+                </button>
+            </div>
+
+            <!-- Chessboard -->
+            <div class="board-wrapper">
+                <div class="chessboard" id="chessboard"></div>
+            </div>
+
+            <!-- Performance Results -->
+            <div class="performance-box" id="performanceSection">
+                <h3 class="performance-title">Performance Comparison</h3>
+                <div class="performance-results">
+                    <div class="result-item">
+                        <span class="result-label">Sequential</span>
+                        <span class="result-value" id="sequentialTime">--</span>
+                        <span class="result-unit">ms</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Threaded</span>
+                        <span class="result-value" id="threadedTime">--</span>
+                        <span class="result-unit">ms</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-banner" id="winnerMessage">
+                <p class="success-text"></p>
+            </div>
+
+        </div>
+
+        <!-- Performance Chart Section -->
+        <div class="chart-card" id="chartSection">
+            <div class="chart-header">
+                <h2 class="chart-title">📊 Algorithm Performance Comparison</h2>
+                <button class="chart-close-btn" id="closeChartButton">✕</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="chart-stats">
+                <div class="chart-stat-item">
+                    <span class="chart-stat-label">Speedup</span>
+                    <span class="chart-stat-value" id="speedupValue">--</span>
+                </div>
+                <div class="chart-stat-item">
+                    <span class="chart-stat-label">Winner</span>
+                    <span class="chart-stat-value" id="winnerAlgorithm">--</span>
+                </div>
+                <div class="chart-stat-item">
+                    <span class="chart-stat-label">Solutions</span>
+                    <span class="chart-stat-value" id="chartSolutionsCount">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="eight-queens.js"></script>
+</body>
+</html>
