@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --board-border: #374151;
+  --snake-color: #ef4444; /* Red */
+  --snake-bg: #fecaca;
+  --ladder-color: #10b981; /* Green */
+  --ladder-bg: #d1fae5;
+  --text-main: #1f2937;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--primary-dark);
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+/* --- Cards & Menu --- */
+.card, .result-card {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  display: inline-block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* --- Inputs & Buttons --- */
+input {
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-right: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--primary);
+}
+
+button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3);
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* --- Game Area --- */
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+@media (min-width: 768px) {
+  .game-area {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+/* --- The Board --- */
+.board-wrapper {
+  position: relative;
+  padding: 10px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.board-grid {
+  display: grid;
+  width: 450px; /* Fixed size for simplified math */
+  height: 450px;
+  /* Checkerboard styling handled via JS index usually, 
+     but here we use simple borders */
+  background-color: #fff;
+  border: 2px solid var(--board-border);
+  position: relative;
+}
+
+.board-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  position: relative;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+/* Checkerboard effect */
+.board-square:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.board-square:hover {
+  background-color: #e0e7ff; /* Light indigo hover */
+  z-index: 2; /* Bring above borders */
+}
+
+/* Snake & Ladder Cells */
+.board-square.snake {
+  background-color: var(--snake-bg);
+  color: #7f1d1d;
+  border: 1px solid var(--snake-color);
+}
+
+.board-square.ladder {
+  background-color: var(--ladder-bg);
+  color: #064e3b;
+  border: 1px solid var(--ladder-color);
+}
+
+/* --- SVG Overlay --- */
+.line-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  /* Ensures line appears exactly over the grid inside wrapper */
+}
+
+/* --- Right Panel --- */
+.right-panel {
+  width: 300px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.right-panel h3 {
+  margin-top: 0;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 10px;
+}
+
+.lists {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.lists h4 {
+  margin-bottom: 5px;
+  color: #6b7280;
+}
+
+.lists ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+/* Question Panel */
+.question-panel h2 {
+  font-size: 1.2rem;
+  color: var(--text-main);
+}
+
+.question-panel button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: white;
+  color: var(--text-main);
+  border: 2px solid var(--primary);
+  box-shadow: none;
+}
+
+.question-panel button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* --- Result Modal Overlay --- */
+.result-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  width: 300px;
+  border: 4px solid white;
+}
+
+.result-card.WIN h2 { color: var(--ladder-color); }
+.result-card.LOSE h2 { color: var(--snake-color); }
+
+.save-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;   /* ⬅ FIX */
+  gap: 10px;
+  width: 100%;
+}
+
+
+/* Utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.performance-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750px;
+  max-width: 95%;
+  background: #0f172a;
+  padding: 20px;
+  border-radius: 12px;
+  z-index: 100;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  color: white;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 99;
+}
